@@ -1,0 +1,281 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class Signup extends StatefulWidget {
+  const Signup({super.key});
+
+  @override
+  State<Signup> createState() => _SignupState();
+}
+
+class _SignupState extends State<Signup> {
+  TextEditingController Email = TextEditingController();
+
+  @override
+  void initState() {
+    visible = true;
+    super.initState();
+  }
+
+  bool visible = false;
+  bool? value = false;
+  bool? value1 = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        width: 1440,
+        height: 1067,
+        decoration: BoxDecoration(color: Colors.white),
+        child: Row(
+          children: [
+            Container(
+              width: 695.w,
+              height: 956.h,
+              decoration: BoxDecoration(color: Color(0x26111111)),
+              child: Image.asset("assets/a.png", fit: BoxFit.cover),
+            ),
+            SingleChildScrollView(
+              child: Container(
+                color: Colors.white,
+                width: 568.w,
+                height:770.h,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 280,),
+                      child: Text(
+                        'Sign Up',
+                        style: GoogleFonts.lato(
+                          color: Color(0xFF333333),
+                          fontSize: 34.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+              
+                    Padding(
+                      padding: const EdgeInsets.only(right: 50),
+                      child: Text(
+                        'Sign up for free to access to in any of our products ',
+                        style: GoogleFonts.lato(
+                          color: Color(0xCC666666),
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 50.h,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right:250),
+                      child: Text(
+                        'Email Address',
+                        style: GoogleFonts.montserrat(
+                          color: Color(0xFF3C4242),
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),SizedBox(height: 10.h,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 80, right: 50),
+                      child:   TextFormField(
+              
+                        controller: Email,
+                        validator: (value) {
+                          if (value!.isEmpty ||
+                              !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(value)) {
+                            return 'Enter a valid email!';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.r)),
+                            labelText: " Email"),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 80),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Password',
+                            style: GoogleFonts.montserrat(
+                              color: Color(0xFF3C4242),
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 240,
+                          ),
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  visible = !visible;
+                                });
+                              },
+                              child: Icon(visible
+                                  ? Icons.remove_red_eye_outlined
+                                  : Icons.visibility_off)),
+                          Text(
+                            'Hide',
+                            style: GoogleFonts.montserrat(
+                              color: Color(0xFF3C4242),
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 80, right: 50),
+                      child: TextField(
+                        obscureText: visible,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.r)),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 80),
+                      child: Text(
+                        'Use 8 or more characters with a mix of letters, numbers & symbols',
+                        style: GoogleFonts.montserrat(
+                          color: Color(0xFF807D7E),
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left:80,top: 10),
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            tristate: true, // Example with tristate
+                            value: value,
+                            onChanged: (bool? newValue) {
+                              setState(() {
+                                value =! value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Agree to our Terms of use and Privacy Policy ',
+                            style: GoogleFonts.montserrat(
+                              color: Color(0xFF807D7E),
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left:80,top: 10),
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            tristate: true, // Example with tristate
+                            value: value1,
+                            onChanged: (bool? newValue) {
+                              setState(() {
+                                value1  =!value1!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Subscribe to our monthly newsletter ',
+                            style: GoogleFonts.montserrat(
+                              color: Color(0xFF807D7E),
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 50.h,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 260),
+                      child: Container(
+                        width: 167.w,
+                        height: 54.h,
+                        decoration: ShapeDecoration(
+                          color: Color(0xFF8A33FD),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Sign up',
+                            style: GoogleFonts.montserrat(
+                              color: Colors.white,
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 60),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Already have an  account? ',
+                            style: GoogleFonts.montserrat(
+                              color: Color(0xFF3C4242),
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => Signup(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Login ',
+                              style: GoogleFonts.montserrat(
+                                decoration: TextDecoration.underline,
+                                color: Color(0xFF3C4242),
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+              
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
