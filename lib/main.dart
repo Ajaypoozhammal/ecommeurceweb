@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:untitled4/Signup.dart';
-import 'package:untitled4/sign%20in.dart';
+import 'package:untitled4/UI/Signup.dart';
+import 'package:untitled4/UI/sign%20in.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
                 useMaterial3: true,
               ),
-              home: Signup()
+              home: Signin()
           );
         }
     );
