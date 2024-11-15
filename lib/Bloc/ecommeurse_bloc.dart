@@ -14,7 +14,7 @@ class EcommeurseBloc extends Bloc<EcommeurseEvent, EcommeurseState> {
     on<FetchEcommeurse>((event, emit) async {
       emit(EcommeurseBlocLoading());
       try{
-        ecommeurseModelclass= await ecommeurseApi.getEcommeurse();
+       ecommeurseModelclass= await ecommeurseApi.getEcommeurse(event.fullname, event.email, event.password);
         emit(EcommeurseBlocLoaded());
       }
       catch(e){

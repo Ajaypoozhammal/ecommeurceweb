@@ -13,13 +13,26 @@ class EcommeurseApi {
   ApiClient apiClient = ApiClient();
 
 
-  Future<EcommeurseModelclass> getEcommeurse() async {
-    String trendingpath = 'http://45.159.221.50:9890/api/signup';
+  Future<EcommeurseModelclass> getEcommeurse(String fullName,
+      String email,
+      String password) async {
+    String trendingpath =
+        'http://45.159.221.50:9890/api/signup';
+    print(trendingpath);
     var body = {
+      {
 
+        "fullName": fullName,
+        "email": email,
+        "password": password
+      }
     };
-    Response response = await apiClient.invokeAPI(trendingpath, 'GET', body);
+    // print('hello' + body.toString());
+    Response response =
+    await apiClient.invokeAPI(trendingpath, 'POST', jsonEncode(body),);
 
-    return EcommeurseModelclass .fromJson(jsonDecode(response.body));
+    print(response.body);
+    return EcommeurseModelclass.fromJson(jsonDecode(response.body));
   }
+
 }

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:untitled4/Bloc/ecommeurse_bloc.dart';
+import 'package:untitled4/Bloc/ecommeurse_bloc.dart';
+import 'package:untitled4/Repository/model%20class/EcommeurseModelclass.dart';
 import 'package:untitled4/UI/Signup.dart';
 
 class Signin extends StatefulWidget {
@@ -17,14 +21,15 @@ class _SigninState extends State<Signin> {
     super.initState();
   }
 
+  late EcommeurseModelclass data;
   bool visible = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: 1440,
-        height: 1067,
+        width: 1440.w,
+        height: 1067.h,
         decoration: BoxDecoration(color: Colors.white),
         child: Row(
           children: [
@@ -143,21 +148,60 @@ class _SigninState extends State<Signin> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 260),
-                    child: Container(
-                      width: 167.w,
-                      height: 54.h,
-                      decoration: ShapeDecoration(
-                        color: Color(0xFF8A33FD),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Sign In',
-                          style: GoogleFonts.montserrat(
-                            color: Colors.white,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w500,
+                    child: BlocListener<EcommeurseBloc, EcommeurseState>(
+                      listener: (context, state) {
+                        if (state is EcommeurseBlocLoading) {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                          );
+                        }
+                        if (state is EcommeurseBlocError) {
+                          Navigator.of(context).pop();
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Center(
+                                child: Text(
+                                  'Something Wrong',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              );
+                            },
+                          );
+                        }
+                        if (state is EcommeurseBlocLoaded) {
+                          data=BlocProvider.of<EcommeurseBloc>(context).ecommeurseModelclass;
+                          Navigator.of(context).pop();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => Signup()));
+                       }
+
+                      },
+                      child: GestureDetector(
+                        child: Container(
+                          width: 167.w,
+                          height: 54.h,
+                          decoration: ShapeDecoration(
+                            color: Color(0xFF8A33FD),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Sign In',
+                              style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
                         ),
                       ),
