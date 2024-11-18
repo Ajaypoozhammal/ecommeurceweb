@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:untitled4/Bloc/ecommeurse_bloc.dart';
 import 'package:untitled4/Repository/model%20class/EcommeurseModelclass.dart';
+import 'package:untitled4/UI/Home.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -12,18 +15,23 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   TextEditingController Email = TextEditingController();
-  late EcommeurseModelclass username;
-  late EcommeurseModelclass email;
-  late EcommeurseModelclass password;
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
+
+
+  late EcommeurseModelclass data;
+
 
   @override
   void initState() {
     visible = true;
     super.initState();
   }
+
   bool visible = false;
   bool? value = false;
   bool? value1 = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +50,7 @@ class _SignupState extends State<Signup> {
             Container(
               color: Colors.white,
               width: 568.w,
-              height:910.h,
+              height: 910.h,
               child: Column(
                 children: [
                   Padding(
@@ -72,9 +80,9 @@ class _SignupState extends State<Signup> {
                     height: 50.h,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right:270),
+                    padding: const EdgeInsets.only(right: 270),
                     child: Text(
-                      "Username",
+                      "username",
                       style: GoogleFonts.montserrat(
                         color: Color(0xFF3C4242),
                         fontSize: 18.sp,
@@ -83,16 +91,17 @@ class _SignupState extends State<Signup> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 80,right: 50,top: 10),
+                    padding: const EdgeInsets.only(
+                        left: 80, right: 50, top: 10),
                     child: TextField(
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.r)),
                             labelText: "Username")),
                   ),
-            SizedBox(height: 30.h,),
+                  SizedBox(height: 30.h,),
                   Padding(
-                    padding: const EdgeInsets.only(right:250),
+                    padding: const EdgeInsets.only(right: 250),
                     child: Text(
                       'Email Address',
                       style: GoogleFonts.montserrat(
@@ -101,15 +110,16 @@ class _SignupState extends State<Signup> {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                  ),SizedBox(height: 10.h,),
+                  ), SizedBox(height: 10.h,),
                   Padding(
                     padding: const EdgeInsets.only(left: 80, right: 50),
-                    child:   TextFormField(
+                    child: TextFormField(
 
                       controller: Email,
                       validator: (value) {
                         if (value!.isEmpty ||
-                            !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                            !RegExp(
+                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                 .hasMatch(value)) {
                           return 'Enter a valid email!';
                         }
@@ -181,7 +191,7 @@ class _SignupState extends State<Signup> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left:80,top: 10),
+                    padding: const EdgeInsets.only(left: 80, top: 10),
                     child: Row(
                       children: [
                         Checkbox(
@@ -189,7 +199,7 @@ class _SignupState extends State<Signup> {
                           value: value,
                           onChanged: (bool? newValue) {
                             setState(() {
-                              value =! value!;
+                              value = !value!;
                             });
                           },
                         ),
@@ -205,7 +215,7 @@ class _SignupState extends State<Signup> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left:80,top: 10),
+                    padding: const EdgeInsets.only(left: 80, top: 10),
                     child: Row(
                       children: [
                         Checkbox(
@@ -213,7 +223,7 @@ class _SignupState extends State<Signup> {
                           value: value1,
                           onChanged: (bool? newValue) {
                             setState(() {
-                              value1  =!value1!;
+                              value1 = !value1!;
                             });
                           },
                         ),
@@ -229,25 +239,68 @@ class _SignupState extends State<Signup> {
                     ),
                   ),
                   SizedBox(
-                    height: 50.h,
+                    height: 20.h,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 260),
-                    child: Container(
-                      width: 167.w,
-                      height: 54.h,
-                      decoration: ShapeDecoration(
-                        color: Color(0xFF8A33FD),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Sign up',
-                          style: GoogleFonts.montserrat(
-                            color: Colors.white,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w500,
+                    padding: const EdgeInsets.only(right: 210),
+                    child: BlocListener<EcommeurseBloc, EcommeurseState>(
+                      listener: (context, state) {
+                        if (state is EcommeurseBlocLoading) {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                          );
+                        }
+                        if (state is EcommeurseBlocError) {
+                          Navigator.of(context).pop();
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Center(
+                                child: Text(
+                                  'Something Wrong',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              );
+                            },
+                          );
+                        }
+                        if (state is EcommeurseBlocLoaded) {
+                          data = BlocProvider
+                              .of<EcommeurseBloc>(context)
+                              .ecommeurseModelclass;
+
+
+                          Navigator.of(context).pop();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => Home()));
+
+                      }
+                      },
+                      child: GestureDetector(onTap:(){BlocProvider.of<EcommeurseBloc>(context).add(FetchEcommeurse(fullname: username.text, email:Email.text, password: password.toString()));},
+                        child: Container(
+                          width: 167.w,
+                          height: 54.h,
+                          decoration: ShapeDecoration(
+                            color: Color(0xFF8A33FD),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Sign up',
+                              style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -257,7 +310,7 @@ class _SignupState extends State<Signup> {
                     height: 10.h,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 60),
+                    padding: const EdgeInsets.only(left: 90),
                     child: Row(
                       children: [
                         Text(
