@@ -1,10 +1,16 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:untitled4/Bloc/ecommeurse_bloc.dart';
 import 'package:untitled4/Bloc/ecommeurse_bloc.dart';
+import 'package:untitled4/Bloc/signin_bloc.dart';
 import 'package:untitled4/Repository/model%20class/EcommeurseModelclass.dart';
+import 'package:untitled4/Repository/model%20class/SigninmodelClass.dart';
+import 'package:untitled4/UI/Home.dart';
 import 'package:untitled4/UI/Signup.dart';
 
 class Signin extends StatefulWidget {
@@ -15,13 +21,16 @@ class Signin extends StatefulWidget {
 }
 
 class _SigninState extends State<Signin> {
+  TextEditingController Email = TextEditingController();
+  TextEditingController username = TextEditingController();
+  late SigninmodelClass data;
+
   @override
   void initState() {
     visible = true;
     super.initState();
   }
 
-  late EcommeurseModelclass data;
   bool visible = false;
 
   @override
@@ -148,9 +157,9 @@ class _SigninState extends State<Signin> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 260),
-                    child: BlocListener<EcommeurseBloc, EcommeurseState>(
+                    child: BlocListener<SigninBloc, SigninState>(
                       listener: (context, state) {
-                        if (state is EcommeurseBlocLoading) {
+                        if (state is SigninBlocLoading) {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -160,7 +169,7 @@ class _SigninState extends State<Signin> {
                             },
                           );
                         }
-                        if (state is EcommeurseBlocError) {
+                        if (state is SigninBlocError) {
                           Navigator.of(context).pop();
                           showDialog(
                             context: context,
@@ -174,37 +183,48 @@ class _SigninState extends State<Signin> {
                             },
                           );
                         }
-                        if (state is EcommeurseBlocLoaded) {
-                          data=BlocProvider.of<EcommeurseBloc>(context).ecommeurseModelclass;
-                          Navigator.of(context).pop();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => Signup()));
-                       }
+                        if (state is SigninBlocLoaded) {
+                          data = BlocProvider.of<SigninBloc>(context)
+                              .signinmodelClass;
+                          token(
+                              // Signin.token!.access.toString(),
+                            data.token!.toString());
+                        // login.token!.refresh.toString());
 
-                      },
-                      child: GestureDetector(
-                        child: Container(
-                          width: 167.w,
-                          height: 54.h,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF8A33FD),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Sign In',
-                              style: GoogleFonts.montserrat(
-                                color: Colors.white,
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w500,
+                          Navigator.of(context).pop();
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => Home()));
+                        }
+                        GestureDetector(
+                          onTap: () {
+                            BlocProvider.of<SigninBloc>(context).add(
+                              FetchSignin(
+                                fullname: username.text.toString(),
+                                email: Email.text.toString(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: 167.w,
+                            height: 54.h,
+                            decoration: ShapeDecoration(
+                              color: Color(0xFF8A33FD),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Sign In',
+                                style: GoogleFonts.montserrat(
+                                  color: Colors.white,
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   ),
                   SizedBox(
@@ -251,5 +271,12 @@ class _SigninState extends State<Signin> {
         ),
       ),
     );
+  }
+
+  void token(
+    String token,
+  ) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('Token', token);
   }
 }
