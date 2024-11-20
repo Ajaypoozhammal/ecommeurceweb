@@ -21,16 +21,16 @@ class EcommeurseApi {
         'http://45.159.221.50:9890/api/signup';
     print(trendingpath);
     var body = {
-      {
+
 
         "fullName": fullName,
         "email": email,
         "password": password
-      }
+
     };
-    // print('hello' + body.toString());
+    print('hello' + body.toString());
     Response response =
-    await apiClient.invokeAPI(trendingpath, 'POST', jsonEncode(body),);
+    await apiClient.invokeAPI(trendingpath, 'POST', jsonEncode(body));
 
     print(response.body);
     return EcommeurseModelclass.fromJson(jsonDecode(response.body));
@@ -43,11 +43,11 @@ class EcommeurseApi {
         'http://45.159.221.50:9890/api/signin';
     print(trendingpath);
     var body = {
-      {
 
-        "email":"hunaispc868@gmail.com",
-        "password":"12345678"
-      }
+
+        "email":email,
+        "password":password
+
     };
     // print('hello' + body.toString());
     Response response =

@@ -15,7 +15,7 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
     on<FetchSignin>((event, emit) async {
       emit(SigninBlocLoading());
       try{
-        signinmodelClass= await ecommeurseApi.getSignin(event.fullname, event.email,);
+        signinmodelClass= await ecommeurseApi.getSignin(event.email, event.password,);
         emit(SigninBlocLoaded());
       }
       catch(e){

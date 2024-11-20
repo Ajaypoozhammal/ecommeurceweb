@@ -3,9 +3,11 @@ part of 'signin_bloc.dart';
 @immutable
 sealed class SigninEvent {}
 class FetchSignin extends SigninEvent {
-  final String fullname;
   final String email;
+  final String password;
 
-  FetchSignin({required this.fullname, required this.email});
+  FetchSignin({required this.email, required this.password});
+
+
 
 }

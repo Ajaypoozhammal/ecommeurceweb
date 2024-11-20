@@ -22,7 +22,7 @@ class Signin extends StatefulWidget {
 
 class _SigninState extends State<Signin> {
   TextEditingController Email = TextEditingController();
-  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
   late SigninmodelClass data;
 
   @override
@@ -81,7 +81,7 @@ class _SigninState extends State<Signin> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 50, right: 50),
-                    child: TextField(
+                    child: TextField(controller: Email,
                       obscureText: !visible,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -129,7 +129,7 @@ class _SigninState extends State<Signin> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 50, right: 50),
-                    child: TextField(
+                    child: TextField(controller:password ,
                       obscureText: visible,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -194,14 +194,11 @@ class _SigninState extends State<Signin> {
                           Navigator.of(context).pop();
                           Navigator.push(context,
                               MaterialPageRoute(builder: (_) => Home()));
-                        }
+                        }},child:
                         GestureDetector(
                           onTap: () {
                             BlocProvider.of<SigninBloc>(context).add(
-                              FetchSignin(
-                                fullname: username.text.toString(),
-                                email: Email.text.toString(),
-                              ),
+                             FetchSignin(email: Email.text.toString(), password:password.text.toString())
                             );
                           },
                           child: Container(
@@ -223,8 +220,7 @@ class _SigninState extends State<Signin> {
                               ),
                             ),
                           ),
-                        );
-                      },
+                        ),
                     ),
                   ),
                   SizedBox(

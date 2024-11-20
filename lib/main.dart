@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:untitled4/Bloc/ecommeurse_bloc.dart';
+import 'package:untitled4/Bloc/signin_bloc.dart';
+import 'package:untitled4/UI/Home.dart';
 import 'package:untitled4/UI/Signup.dart';
 import 'package:untitled4/UI/sign%20in.dart';
 
@@ -21,8 +23,15 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         // Use builder only if you need to use library outside ScreenUtilInit context
         builder: (_, child) {
-          return BlocProvider(
-            create: (context) => EcommeurseBloc(),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => EcommeurseBloc(),
+              ),
+              BlocProvider(
+                create: (context) => SigninBloc(),
+              ),
+            ],
             child: MaterialApp(debugShowCheckedModeBanner: false,
                 title: 'Flutter Demo',
                 theme: ThemeData(
@@ -45,7 +54,7 @@ class MyApp extends StatelessWidget {
                       seedColor: Colors.deepPurple),
                   useMaterial3: true,
                 ),
-                home: Signup()
+                home: Home()
             ),
           );
         }

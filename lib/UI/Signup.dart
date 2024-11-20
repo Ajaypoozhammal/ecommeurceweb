@@ -282,11 +282,12 @@ class _SignupState extends State<Signup> {
                         },
                         child: GestureDetector(
                           onTap: () {
+                            print(username.text);
                             BlocProvider.of<EcommeurseBloc>(context).add(
                               FetchEcommeurse(
-                                fullname: username.text.toString(),
-                                email: Email.text.toString(),
-                                password: password.text.toString(),
+                                fullname: username.text,
+                                email: Email.text,
+                                password: password.text,
                               ),
                             );
                           },
