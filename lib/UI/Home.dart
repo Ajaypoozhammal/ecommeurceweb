@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   options: CarouselOptions(
-                    height: 500.h,
+                    height: 600.h,
                     aspectRatio: 16 / 16,
                     viewportFraction: 0.8,
                     initialPage: currentIndex,
@@ -85,7 +85,7 @@ class _HomeState extends State<Home> {
                         ),
                       ),SizedBox(width: 5.w,),
                       Text(
-                        'Categories For Men',
+                        'Get All Popular Product',
                         style: GoogleFonts.montserrat(
                           color: Color(0xFF3C4242),
                           fontSize: 34.sp,
@@ -177,7 +177,7 @@ class _HomeState extends State<Home> {
                         ),
                       ),SizedBox(width: 5.w,),
                       Text(
-                        'Categories For Men',
+                        'Get All RecommendedProducts',
                         style: GoogleFonts.montserrat(
                           color: Color(0xFF3C4242),
                           fontSize: 34.sp,
@@ -185,6 +185,165 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                SizedBox(
+                  height: 1000.h,
+                  child: GridView.builder(physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      mainAxisSpacing: 8.0,
+                      crossAxisSpacing: 8.0,
+                      childAspectRatio: 400 / 400,
+                    ),
+                    itemCount: 8,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          Container(
+                            width: 270.36.w,
+                            height: 393.26.h,
+                            child: Image.asset(
+                              "assets/c.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 37, right: 37),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: 128.48.w,
+                                  height: 70.90.h,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Shirts',
+                                        style: GoogleFonts.castoro(
+                                          color: Color(0xFF2A2F2F),
+                                          fontSize: 17.88.sp,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Explore Now!',
+                                        style: GoogleFonts.castoro(
+                                          color: Color(0xFF7F7F7F),
+                                          fontSize: 13.41.sp,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward,
+                                  color: Color(0xFF7F7F7F),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 40),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 6.w,
+                        height: 30.h,
+                        decoration: ShapeDecoration(
+                          color: Color(0xFF8A33FD),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),SizedBox(width: 5.w,),
+                      Text(
+                        'Get Product By Category',
+                        style: GoogleFonts.montserrat(
+                          color: Color(0xFF3C4242),
+                          fontSize: 34.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                SizedBox(
+                  height: 1000.h,
+                  child: GridView.builder(physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      mainAxisSpacing: 8.0,
+                      crossAxisSpacing: 8.0,
+                      childAspectRatio: 400 / 400,
+                    ),
+                    itemCount: 8,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          Container(
+                            width: 270.36.w,
+                            height: 393.26.h,
+                            child: Image.asset(
+                              "assets/c.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 37, right: 37),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: 128.48.w,
+                                  height: 70.90.h,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Shirts',
+                                        style: GoogleFonts.castoro(
+                                          color: Color(0xFF2A2F2F),
+                                          fontSize: 17.88.sp,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Explore Now!',
+                                        style: GoogleFonts.castoro(
+                                          color: Color(0xFF7F7F7F),
+                                          fontSize: 13.41.sp,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward,
+                                  color: Color(0xFF7F7F7F),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      );
+                    },
                   ),
                 ),
               ],
