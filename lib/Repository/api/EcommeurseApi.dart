@@ -2,6 +2,7 @@ import 'dart:convert';
 
 
 import 'package:http/http.dart';
+import 'package:untitled4/Repository/model%20class/BannerModelClass.dart';
 import 'package:untitled4/Repository/model%20class/EcommeurseModelclass.dart';
 import 'package:untitled4/Repository/model%20class/SigninmodelClass.dart';
 
@@ -57,4 +58,13 @@ class EcommeurseApi {
     return SigninmodelClass.fromJson(jsonDecode(response.body));
   }
 
+  Future<List<BannerModelClass>> getBanner() async {
+    String trendingpath = 'http://45.159.221.50:9890/api/banner';
+    var body = {
+
+    };
+    Response response = await apiClient.invokeAPI(trendingpath, 'GET', body);
+
+    return BannerModelClass.listFromJson(jsonDecode(response.body));
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:untitled4/Bloc/banner_bloc.dart';
 import 'package:untitled4/Bloc/ecommeurse_bloc.dart';
 import 'package:untitled4/Bloc/signin_bloc.dart';
 import 'package:untitled4/UI/Home.dart';
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
               BlocProvider(
                 create: (context) => SigninBloc(),
               ),
+              BlocProvider(
+                create: (context) => BannerBloc(),
+              )
             ],
             child: MaterialApp(debugShowCheckedModeBanner: false,
                 title: 'Flutter Demo',

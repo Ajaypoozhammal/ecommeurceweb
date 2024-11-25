@@ -1,9 +1,12 @@
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:untitled4/Bloc/banner_bloc.dart';
+import 'package:untitled4/Repository/model%20class/BannerModelClass.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -14,6 +17,15 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int currentIndex = 0;
+  TextEditingController image = TextEditingController();
+  TextEditingController Banner = TextEditingController();
+  late List <BannerModelClass>data;
+  @override
+  void initState() {
+    BlocProvider.of<BannerBloc>(context).add(FetchBanner());
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,37 +40,58 @@ class _HomeState extends State<Home> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CarouselSlider.builder(
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int itemIndex,
-                          int pageViewIndex) =>
-                      Container(
-                    width: 1448.w,
-                    child: Image.asset(
-                      'assets/b.png',
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  options: CarouselOptions(
-                    height: 600.h,
-                    aspectRatio: 16 / 16,
-                    viewportFraction: 0.8,
-                    initialPage: currentIndex,
-                    enableInfiniteScroll: true,
-                    reverse: false,
-                    autoPlay: true,
-                    onPageChanged: (index, c) {
-                      setState(() {
-                        currentIndex = index;
-                      });
-                    },
-                    autoPlayInterval: Duration(seconds: 1),
-                    autoPlayAnimationDuration: Duration(milliseconds: 800),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    enlargeCenterPage: true,
-                    enlargeFactor: 0.3,
-                    scrollDirection: Axis.horizontal,
-                  ),
+                BlocBuilder<BannerBloc, BannerState>(
+                  builder: (context, state) {
+                    if (state is BannerBlocLoading) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (state is BannerBlocError) {
+                      return Center(
+                        child: Text("Error"),
+                      );
+                    }
+                    if (state is BannerBlocLoaded) {
+                      data = BlocProvider.of<BannerBloc>(context).BannerModel;
+
+                      return CarouselSlider.builder(
+                        itemCount: data.length,
+                        itemBuilder: (BuildContext context, int itemIndex,
+                                int pageViewIndex) =>
+                            Container(
+                          width: 1448.w,
+                          child: Image.network(
+                          data[itemIndex].image.toString()  ,
+                          fit: BoxFit.fill,
+                          ),
+                        ),
+                        options: CarouselOptions(
+                          height: 600.h,
+                          aspectRatio: 16 / 16,
+                          viewportFraction: 0.8,
+                          initialPage: currentIndex,
+                          enableInfiniteScroll: true,
+                          reverse: false,
+                          autoPlay: true,
+                          onPageChanged: (index, c) {
+                            setState(() {
+                              currentIndex = index;
+                            });
+                          },
+                          autoPlayInterval: Duration(seconds: 1),
+                          autoPlayAnimationDuration:
+                              Duration(milliseconds: 800),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          enlargeCenterPage: true,
+                          enlargeFactor: 0.3,
+                          scrollDirection: Axis.horizontal,
+                        ),
+                      );
+                    } else {
+                      return SizedBox();
+                    }
+                  },
                 ),
                 SizedBox(
                   height: 10.h,
@@ -83,7 +116,10 @@ class _HomeState extends State<Home> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                      ),SizedBox(width: 5.w,),
+                      ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
                       Text(
                         'Get All Popular Product',
                         style: GoogleFonts.montserrat(
@@ -100,7 +136,8 @@ class _HomeState extends State<Home> {
                 ),
                 SizedBox(
                   height: 1000.h,
-                  child: GridView.builder(physics: NeverScrollableScrollPhysics(),
+                  child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
                       mainAxisSpacing: 8.0,
@@ -175,7 +212,10 @@ class _HomeState extends State<Home> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                      ),SizedBox(width: 5.w,),
+                      ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
                       Text(
                         'Get All RecommendedProducts',
                         style: GoogleFonts.montserrat(
@@ -192,7 +232,8 @@ class _HomeState extends State<Home> {
                 ),
                 SizedBox(
                   height: 1000.h,
-                  child: GridView.builder(physics: NeverScrollableScrollPhysics(),
+                  child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
                       mainAxisSpacing: 8.0,
@@ -221,7 +262,7 @@ class _HomeState extends State<Home> {
                                   height: 70.90.h,
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'Shirts',
@@ -267,7 +308,10 @@ class _HomeState extends State<Home> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                      ),SizedBox(width: 5.w,),
+                      ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
                       Text(
                         'Get Product By Category',
                         style: GoogleFonts.montserrat(
@@ -284,7 +328,8 @@ class _HomeState extends State<Home> {
                 ),
                 SizedBox(
                   height: 1000.h,
-                  child: GridView.builder(physics: NeverScrollableScrollPhysics(),
+                  child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
                       mainAxisSpacing: 8.0,
@@ -313,7 +358,7 @@ class _HomeState extends State<Home> {
                                   height: 70.90.h,
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'Shirts',
