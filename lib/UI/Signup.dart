@@ -41,12 +41,6 @@ class _SignupState extends State<Signup> {
           child: Row(
             children: [
               Container(
-                width: 695.w,
-                height: 956.h,
-                decoration: BoxDecoration(color: Color(0x26111111)),
-                child: Image.asset("assets/a.png", fit: BoxFit.cover),
-              ),
-              Container(
                 color: Colors.white,
                 width: 568.w,
                 height: 910.h,

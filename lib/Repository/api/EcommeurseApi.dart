@@ -6,6 +6,7 @@ import 'package:untitled4/Repository/model%20class/BannerModelClass.dart';
 import 'package:untitled4/Repository/model%20class/EcommeurseModelclass.dart';
 import 'package:untitled4/Repository/model%20class/SigninmodelClass.dart';
 
+import '../model class/PopularProductModel.dart';
 import 'Api client.dart';
 
 
@@ -66,5 +67,14 @@ class EcommeurseApi {
     Response response = await apiClient.invokeAPI(trendingpath, 'GET', body);
 
     return BannerModelClass.listFromJson(jsonDecode(response.body));
+  }
+  Future<List<PopularProductModel>>getPopularProduct() async {
+    String trendingpath = 'http://45.159.221.50:9890/api/popular-products';
+    var body = {
+
+    };
+    Response response = await apiClient.invokeAPI(trendingpath, 'GET', body);
+    return PopularProductModel.listFromJson(jsonDecode(response.body));
+
   }
 }
