@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:untitled4/Bloc/ecommeurse_bloc.dart';
+import 'package:untitled4/Bloc/Signup/ecommeurse_bloc.dart';
 import 'package:untitled4/Repository/model%20class/EcommeurseModelclass.dart';
 import 'package:untitled4/UI/sign%20in.dart';
 
@@ -327,7 +327,7 @@ class _SignupState extends State<Signup> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) => Signup(),
+                                  builder: (_) => Signin(),
                                 ),
                               );
                             },

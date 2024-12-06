@@ -18,6 +18,7 @@ class BannerBloc extends Bloc<BannerEvent, BannerState> {
         emit(BannerBlocLoaded());
       }
       catch(e){
+        print(e.toString());
         emit(BannerBlocError());
       }
     });

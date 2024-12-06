@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:untitled4/Bloc/banner_bloc.dart';
-import 'package:untitled4/Bloc/ecommeurse_bloc.dart';
-import 'package:untitled4/Bloc/popular_product_bloc.dart';
-import 'package:untitled4/Bloc/signin_bloc.dart';
+import 'package:untitled4/Bloc/Banner/banner_bloc.dart';
+import 'package:untitled4/Bloc/Signup/ecommeurse_bloc.dart';
+import 'package:untitled4/Bloc/Popular/popular_product_bloc.dart';
+import 'package:untitled4/Bloc/Recommented/recommented_bloc.dart';
+import 'package:untitled4/Bloc/Signing/signin_bloc.dart';
 import 'package:untitled4/UI/Signup.dart';
 import 'package:untitled4/UI/sign%20in.dart';
 
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => PopularProductBloc(),
+              ),
+              BlocProvider(
+                create: (context) => RecommentedBloc(),
               )
             ],
             child: MaterialApp(debugShowCheckedModeBanner: false,
@@ -63,7 +67,7 @@ class MyApp extends StatelessWidget {
                       seedColor: Colors.deepPurple),
                   useMaterial3: true,
                 ),
-                home: Home()
+                home: Signup()
             ),
           );
         }

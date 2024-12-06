@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:untitled4/Repository/model%20class/SigninmodelClass.dart';
 
-import '../Repository/api/EcommeurseApi.dart';
-import '../Repository/model class/EcommeurseModelclass.dart';
+import '../../Repository/api/EcommeurseApi.dart';
+import '../../Repository/model class/EcommeurseModelclass.dart';
 
 part 'signin_event.dart';
 part 'signin_state.dart';
